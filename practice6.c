@@ -12,7 +12,7 @@ void insert(){
     struct node *temp, *newnode;
     int choice2;
     temp=head;
-    printf("Enter 1 to insert at begining,2 to insert at end and 3 to insert at any index:");
+    printf("Enter 1 to insert at begining,2 to insert at end and 3 to insert at the middle:");
     scanf("%d",&choice2);
     if (choice2==1){
         newnode=(struct node *)malloc(sizeof(struct node));
@@ -37,7 +37,48 @@ void insert(){
     else if(choice2==3){
         int index;
         printf("Enter the index where you want to add:");
-        
+        scanf("%d",&index);
+        for (int i=0;i<index-1;i++){
+            temp=temp->next;
+        }
+        newnode=(struct node *)malloc(sizeof(struct node));
+        printf("Enter the element");
+        scanf("%d",&(newnode->data));
+        newnode->next=temp->next;
+        temp->next=newnode;
+        }
+    else{
+        printf("Invalid input.");
+        return;
+    }
+}
+
+void delete(){
+    struct node *temp;
+    temp=head;
+    int choice2;
+    printf("Enter 1 to delete from begining,2 to delete at end and 3 to delete at the middle:");
+    scanf("%d",&choice2);
+    if (choice2==1){
+        head=head->next;
+        return;
+    }
+    else if(choice2==2){
+        while (temp->next->next!=NULL){
+            temp=temp->next;
+        }
+        temp->next=NULL;
+        return;
+
+    }
+    else if(choice2==3){
+        int index;
+        printf("Enter the index where you want to delete:");
+        scanf("%d",&index);
+        for (int i=0;i<index-1;i++){
+            temp=temp->next;            
+        }
+        temp->next=temp->next->next;
     }
     else{
         printf("Invalid input.");
@@ -72,7 +113,8 @@ void main(){
                 insert();
                 break;
             case 2:
-                //delete();
+                delete();
+                break;
             case 3:
                 disp();
                 break;
@@ -83,7 +125,6 @@ void main(){
                 printf("Invalid input");
                 break;
         }
-    }while (choice!=4);
-    
+    }while (choice!=4);   
     return;
 }
