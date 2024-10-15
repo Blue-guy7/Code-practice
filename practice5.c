@@ -12,7 +12,7 @@ void insert(){
     struct node *temp, *newnode;
     int choice2;
     temp=head;
-    printf("Enter 1 to insert at begining,2 to insert at end and 3 to insert at any index:");
+    printf("Enter 1 to insert at begining,2 to insert at end and 3 to insert after any value:");
     scanf("%d",&choice2);
     if (choice2==1){
         newnode=(struct node *)malloc(sizeof(struct node));
@@ -35,9 +35,67 @@ void insert(){
         return;
     }
     else if(choice2==3){
-        int index;
-        printf("Enter the index where you want to add:");
+        int index,val;
+        printf("Enter the value after which you want to add:");
+        scanf("%d",&val);
+        while ((temp->data!=val)&&(temp!=NULL)){
+            temp=temp->next;
+        }
+        if (temp==NULL){
+            printf("Value not found.");
+            return;
+        }
+        else{
+            newnode=(struct node *)malloc(sizeof(struct node));
+            printf("Enter the element:");
+            scanf("%d",&(newnode->data));
+            newnode->next=temp->next;
+            temp->next=newnode;
+            return;
+        }
+
+    }
+    else{
+        printf("Invalid input.");
+        return;
+    }
+}
+
+void delete(){
+    struct node *temp;
+    int choice2;
+    printf("Enter 1 to delete at the begining, 2 to delete at the endand 3 to delete after any value:");
+    scanf("%d",&choice2);
+    temp=head;
+    if (choice2==1){
+        head=head->next;
+        return;
+    }
+    else if (choice2==2)
+    {
+        while((temp->next)!=NULL){
+        temp= temp->next;
+        }
+        temp->next=NULL;
+        return;
+    }
+    else if(choice2==3){
+        int index,val;
+        printf("Enter the value which you want to delete:");
+        scanf("%d",&val);
+        while ((temp->data!=val)&&(temp->next!=NULL)){
+            temp=temp->next;
+        }
+        if (temp==NULL){
+            printf("Value not found.");
+            return;
+        }
         
+        else{
+            temp->next=temp->next->next;
+            return;
+        }
+
     }
     else{
         printf("Invalid input.");
@@ -60,7 +118,7 @@ void main(){
     struct node *newnode;
     int choice;
     newnode=(struct node *)malloc(sizeof(struct node));
-    printf("Enter the first element");
+    printf("Enter the first element:");
     scanf("%d",&(newnode->data));
     newnode->next=NULL;
     head= newnode;
@@ -72,7 +130,8 @@ void main(){
                 insert();
                 break;
             case 2:
-                //delete();
+                delete();
+                break;
             case 3:
                 disp();
                 break;
